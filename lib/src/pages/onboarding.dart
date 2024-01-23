@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:personal_app/src/pages/sample_feature/sample_item_details_view.dart';
+import 'package:personal_app/src/pages/login/login_init.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
+  static const routeName = '/onBoarding';
 
   @override
   State<OnBoarding> createState() => _OnBoardingState();
@@ -32,7 +33,7 @@ class _OnBoardingState extends State<OnBoarding> {
             },
             children: [
               buildPage(
-                  color: const Color.fromARGB(255, 255, 183, 142),
+                  color: const Color.fromARGB(255, 255, 92, 0),
                   title: 'Descubra do que seu corpo é capaz',
                   subtitle:
                       'Conecte com personais especializados que irão potencializar seus ganhos ',
@@ -68,15 +69,16 @@ class _OnBoardingState extends State<OnBoarding> {
                   final prefs = await SharedPreferences.getInstance();
                   prefs.setBool('showHome', true);
 
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (context) => SampleItemDetailsView()),
+                    MaterialPageRoute(builder: (context) => const LoginInit()),
                   );
                 },
               )
             : Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 height: 80,
+                color: Colors.transparent,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -116,27 +118,60 @@ class _OnBoardingState extends State<OnBoarding> {
       Container(
           color: color,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(
-                urlImage,
-                fit: BoxFit.cover,
-                width: double.infinity, // Ajuste a largura conforme necessário
-                height: 200, // Ajuste a altura conforme necessário
+              Expanded(
+                child: Center(
+                    child: Stack(
+                  children: [
+                    Positioned(
+                      top: 50,
+                      child: SvgPicture.asset(
+                        'assets/images/onBoarding/cloud.svg',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 200,
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      urlImage,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 300,
+                    ),
+                  ],
+                )),
               ),
-              const SizedBox(height: 64),
-              Text(title,
-                  style: TextStyle(
-                    color: Colors.teal.shade700,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  )),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.symmetric(),
-                child:
-                    Text(subtitle, style: const TextStyle(color: Colors.black)),
-              )
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 20, 50, 0),
+                  child: Column(
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 27,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          subtitle,
+                          style: const TextStyle(
+                            color: Color(0xFF2E2929),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 60),
             ],
           ));
 }

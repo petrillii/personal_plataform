@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:personal_app/src/pages/onboarding.dart';
+import 'package:personal_app/src/pages/login/login_init.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Displays detailed information about a SampleItem.
-class SampleItemDetailsView extends StatelessWidget {
-  const SampleItemDetailsView({super.key});
+class HomePrincipal extends StatelessWidget {
+  const HomePrincipal({super.key});
 
-  static const routeName = '/sample_item';
+  static const routeName = '/home-principal';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Item Details'),
+        title: const Text('teste'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -21,7 +20,7 @@ class SampleItemDetailsView extends StatelessWidget {
               prefs.setBool('showHome', false);
 
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const OnBoarding()));
+                  MaterialPageRoute(builder: (context) => const LoginInit()));
             },
           )
         ],

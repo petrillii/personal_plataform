@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:personal_app/src/pages/home/home_principal.dart';
+import 'package:personal_app/src/pages/login/login_init.dart';
 import 'package:personal_app/src/pages/onboarding.dart';
-
-import 'pages/sample_feature/sample_item_details_view.dart';
-import 'pages/sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -30,12 +29,9 @@ class MyApp extends StatelessWidget {
       listenable: settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          // Providing a restorationScopeId allows the Navigator built by the
-          // MaterialApp to restore the navigation stack when a user leaves and
-          // returns to the app after it has been killed while running in the
-          // background.
+          debugShowCheckedModeBanner: false,
           restorationScopeId: 'app',
-
+          home: showHome ? const LoginInit() : const OnBoarding(),
           // Provide the generated AppLocalizations to the MaterialApp. This
           // allows descendant Widgets to display the correct translations
           // depending on the user's locale.
@@ -56,10 +52,6 @@ class MyApp extends StatelessWidget {
           // directory.
           onGenerateTitle: (BuildContext context) =>
               AppLocalizations.of(context)!.appTitle,
-
-          // Define a light and dark color theme. Then, read the user's
-          // preferred ThemeMode (light, dark, or system default) from the
-          // SettingsController to display the correct theme.
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
           themeMode: settingsController.themeMode,
@@ -73,18 +65,17 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
+                  case LoginInit.routeName:
+                    return const LoginInit();
+                  case HomePrincipal.routeName:
+                  case OnBoarding.routeName:
+                    return const OnBoarding();
                   default:
-                    return const SampleItemListView();
+                    return const HomePrincipal();
                 }
               },
             );
           },
-          home: showHome
-              ? SampleItemDetailsView()
-              : OnBoarding(), //ALTERAR PARA A TELA DE HOME
         );
       },
     );
